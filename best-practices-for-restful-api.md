@@ -37,10 +37,10 @@
 
 
 
-## <a name="h3">数据格式</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h3">数据格式</a>
 >强烈建议统一使用application/json，而且它应该成为默认的交互协议。
 
-### <a name="h3.1">application/x-www-form-urlencoded</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h3.1">application/x-www-form-urlencoded</a>
 
 很多人误认为这是HTTP的“默认”数据类型。
 
@@ -55,7 +55,7 @@ application/x-www-form-urlencoded由于受限于它自身的定义，尤其描�
 目前，不管是服务端还是客户端，正确处理不同的MIME type，在技术上已经没有任何障碍。因此，我们更没有理由在RESTful API上使用表达能力非常有限的application/x-www-form-urlencode作为默认格式，是时候把这个类型丢在脑后了。
 
 
-### <a name="h3.2">Accept和Content-Type（推荐）</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h3.2">Accept和Content-Type（推荐）</a>
 
 | 类型 | HTTP头 | 说明 | 实例 |
 | --- | --- | --- | --- |
@@ -73,7 +73,7 @@ HTTP协议中定义Accept和Content-Type头，正是为了达到客户端和服�
 - Chrome: [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?utm_source=chrome-ntp-icon), [Advanced REST client](https://chrome.google.com/webstore/detail/advanced-rest-client/bljmokabgbdkoefbmccaeficehkmlnao)
 - Firefox: [RESTClient, a debugger for RESTful web services](https://addons.mozilla.org/en-US/firefox/addon/restclient/)
 
-### <a name="h3.3">.json/.xml/.html</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h3.3">.json/.xml/.html</a>
 
 ```javascript
 /posts/2341/comments/5543.json
@@ -89,7 +89,7 @@ HTTP头这样的信息是，要么通过浏览器插件，要么通过程序中�
 以增量的方式对已有的API进行适配升级，升级的时候把原来使用的格式作为默认格式，其实代价不会大到无法接受。
 
 
-### <a name="h3.4">不使用修饰词</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h3.4">不使用修饰词</a>
 
 与在URL避免用废话修饰的理由相同
 
@@ -148,7 +148,7 @@ HTTP头这样的信息是，要么通过浏览器插件，要么通过程序中�
 但从职责来看，这是API服务的提供方有没有良好的服务意识的问题，因此应优先考虑在服务方得到解决。
 
 
-### <a name="h3.5">命名风格</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h3.5">命名风格</a>
 
 一般来讲，API是要遵守客户端语言的命名规范。
 
@@ -163,7 +163,7 @@ HTTP头这样的信息是，要么通过浏览器插件，要么通过程序中�
 >据统计snake_case风格比camelCase要容易阅读20%左右!
 
 
-### <a name="h3.6">格式化和性能</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h3.6">格式化和性能</a>
 
 > ?_pretty=true
 
@@ -186,7 +186,7 @@ HTTP头这样的信息是，要么通过浏览器插件，要么通过程序中�
 - Firefox: [JSONView](https://addons.mozilla.org/en-us/firefox/addon/jsonview/)
 
 
-## <a name="h4">状态码</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h4">状态码</a>
 
 HTTP状态码很多，可以看[List of HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)了解一下。 
 
@@ -216,15 +216,15 @@ HTTP状态码很多，可以看[List of HTTP status codes](https://en.wikipedia.
 | 500 | Internal Server Error | 任何一个API都应该避免让web服务返回5XX的状态码。不应让客户端能够感知到服务端配置错了或者写错了代码。 |
 
 
-## <a name="h5">数据操作</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h5">数据操作</a>
 
 >数据操作可以抽象为最基本的5类：增、删、改、查、搜。
 
 >你还需要了解《[异常详情](#h4.2)》两节。
 
-### <a name="h5.1">单实体操作</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h5.1">单实体操作</a>
 
-#### <a name="h5.1.1">增</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.1.1">增</a>
 
 相当于SQL中的INSERT。
 
@@ -261,7 +261,7 @@ HTTP状态码很多，可以看[List of HTTP status codes](https://en.wikipedia.
 }
 ```
 
-#### <a name="h5.1.2">删</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.1.2">删</a>
 
 这个操作逻辑上也能知道只能成功一次。
 
@@ -290,7 +290,7 @@ HTTP状态码很多，可以看[List of HTTP status codes](https://en.wikipedia.
 // 事实上用户确认自己要删除的目标对象那一步，往往是需要在提交删除操作之前要完成。
 ```
 
-#### <a name="h5.1.3">改</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.1.3">改</a>
 
 幂等方式修改已有的数据。
 
@@ -327,7 +327,7 @@ HTTP状态码很多，可以看[List of HTTP status codes](https://en.wikipedia.
 }
 ```
 
-#### <a name="h5.1.4">查</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.1.4">查</a>
 
 相当于SQL中的SELECT。而URL则相当于WHERE。
 
@@ -368,7 +368,7 @@ HTTP状态码很多，可以看[List of HTTP status codes](https://en.wikipedia.
 }
 ```
 
-##### <a name="h5.1.4.1">关系</a><sup>[&#x2191;top](#top)</sup>
+##### <a name="h5.1.4.1">关系</a>
 如果，你已经阅读到这里，那么心里应该已经有很大的困惑：
 >我的API要表达多种实体数据，而且还要把它们的关系表达出来，这个怎么办？
 
@@ -452,7 +452,7 @@ HTTP状态码很多，可以看[List of HTTP status codes](https://en.wikipedia.
 }
 ```
 
-##### <a name="h5.1.4.2">字段挑选</a><sup>[&#x2191;top](#top)</sup>
+##### <a name="h5.1.4.2">字段挑选</a>
 
 >可以按需获取所需要的信息，减少通信数据的大小。需要约定。
 
@@ -464,7 +464,7 @@ HTTP状态码很多，可以看[List of HTTP status codes](https://en.wikipedia.
 /posts?_field=id,title,tags.id,tags.name&_extend=tags
 ```
 
-#### <a name="h5.1.5">异常</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.1.5">异常</a>
 
 API为客户端反馈异常情况的时候，往往状态码和简单的一句描述，是远远不够的。
 
@@ -499,9 +499,9 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 }
 ```
 
-### <a name="h5.2">多实体操作(批量操作)</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h5.2">多实体操作(批量操作)</a>
 
-#### <a name="h5.2.1">增</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.2.1">增</a>
 
 ```javascript
 // 请求
@@ -546,7 +546,7 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 ]
 ```
 
-#### <a name="h5.2.2">删</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.2.2">删</a>
 
 隐含“多实体”的“查”操作。
 
@@ -565,7 +565,7 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 // Content-Encoding: gzip
 ```
 
-#### <a name="h5.2.3">改</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.2.3">改</a>
 
 ```javascript
 // 请求
@@ -612,11 +612,11 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 ]
 ```
 
-#### <a name="h5.2.4">查</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.2.4">查</a>
 
 >它们是RESTful API的设计难点
 
-##### <a name="h5.2.4.1">过滤</a><sup>[&#x2191;top](#top)</sup>
+##### <a name="h5.2.4.1">过滤</a>
 
 ```javascript
 // 请求
@@ -626,7 +626,7 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 /posts?id=123,456&user_id>=16&tag_id!=12,22
 ```
 
-##### <a name="h5.2.4.2">排序</a><sup>[&#x2191;top](#top)</sup>
+##### <a name="h5.2.4.2">排序</a>
 ```javascript
 // 请求
 // Request Method: GET
@@ -635,7 +635,7 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 /posts?_sort=user_id,-update_datetime,tag_id
 ```
 
-##### <a name="h5.2.4.3">翻页</a><sup>[&#x2191;top](#top)</sup>
+##### <a name="h5.2.4.3">翻页</a>
 
 ```javascript
 // 请求
@@ -666,7 +666,7 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 }
 ```
 
-#### <a name="h5.2.5">异常</a><sup>[&#x2191;top](#top)</sup>
+#### <a name="h5.2.5">异常</a>
 ```javascript
 {
   // 实体key。
@@ -699,7 +699,7 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 }
 ```
 
-### <a name="h5.3">其他</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h5.3">其他</a>
 
 API设计过程当中，也会碰到一些无法用以上的操作无法描述的操作。
 
@@ -714,7 +714,7 @@ API设计过程当中，也会碰到一些无法用以上的操作无法描述�
   关键字来进行搜索，但可能会匹配文章，可能会匹配评论，也有可能会匹配新闻公告等。
   这种情况下是没有办法事先明确资源。因此系统提供/search这种专用的URL是比较可取的。
 
-## <a name="h7">版本化</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h7">版本化</a>
 >版本化会为你将来的重构、升级、并存等创造条件。
 
 当然同时需要利用对域名的良好的命名为不同类型的资源划分好领域。
@@ -736,7 +736,7 @@ API对任何应用，在分层角度上都是偏“底层”的“数据源”�
 /rest/v1/posts/123?_ver=v1.1.5
 ```
 
-## <a name="h8">国际化</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h8">国际化</a>
 
 ```javascript
 // 请求
@@ -748,23 +748,23 @@ API对任何应用，在分层角度上都是偏“底层”的“数据源”�
 // Content-Language: zh-CN
 ```
 
-## <a name="h9">资源授权、身份验证、权限验证</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h9">资源授权、身份验证、权限验证</a>
 
-### <a name="h9.1">OAuth 2.0</a><sup>[&#x2191;top](#top)</sup>
+### <a name="h9.1">OAuth 2.0</a>
 
 TODO
 
-## <a name="h10">频率限制</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h10">频率限制</a>
 TODO
 
 X-Rate-Limit-Limit, X-Rate-Limit-Remaining, X-Rate-Limit-Reset 
 
 
-## <a name="h11">缓存</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h11">缓存</a>
 
 TODO
 
-## <a name="h12">HATEOAS</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h12">HATEOAS</a>
 >**H**ypermedia **a**s **t**he **E**ngine **o**f **A**pplication **S**tate
 
 为客户端提供利用API进一步查找数据的附加信息。
@@ -785,7 +785,7 @@ TODO
 }
 ```
 
-## <a name="h13">穿过特殊的网络环境</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h13">穿过特殊的网络环境</a>
 
 >网络环境中有的代理服务可能只支持GET和POST方法
 
@@ -797,7 +797,7 @@ TODO
 // X-HTTP-Method-Override: PUT
 ```
 
-## <a name="h999">Links</a><sup>[&#x2191;top](#top)</sup>
+## <a name="h999">Links</a>
 
 - [ISO 8601](./iso-8601.md)
 - [MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)。
