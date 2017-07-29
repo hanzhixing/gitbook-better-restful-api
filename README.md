@@ -1,1 +1,2 @@
-# gitbook-better-restful-api
+# 更加合理地设计RESTful API（持续更新...）
+>如果你看到更好的文章，有更好的点子，请帮助我完善它，提issue给我。
