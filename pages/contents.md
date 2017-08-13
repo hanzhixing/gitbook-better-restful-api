@@ -1,33 +1,39 @@
 # 数据格式
->强烈建议统一使用application/json，而且它应该成为默认的交互协议。
+强烈建议使用**application/json**作为默认的内容格式。
 
-<a name="application-json"></a>
-## application/json
+## 所谓的默认格式
 
-很多人误认为这是HTTP的“默认”数据类型。
+很多人误认为网页表单提交时刻服务端得到的数据格式是HTTP的“默认”数据类型。
 
-实际上在请求阶段会把表单项键值对拼接成key1=value1&key2[]=value21&key2[]=value22这种字符串放在Body中发送。
+实际是浏览器在请求阶段把表单项键值对拼接成key1=value1&key2[]=value21&key2[]=value22这种字符串放在Body中发送。
 
-它并不是什么HTTP的“默认”数据格式，而是早些年实现的浏览器的默认行为实现。这个默认行为也要看具体是什么样的表单项，如果是大文件上传，这个格式可能会变成multipart/form-data，并不是application/x-www-form-urlencoded。因此，事实上没有什么所谓HTTP的默认格式。
+这种格式为**application/x-www-form-urlencoded**。
 
-最新的Javascript框架或库，以angular为例，也已经不再把老式浏览器的默认MIME type作为自己默认的数据格式，而是转而使用application/json，或者让开发者自己定义。
+浏览器的这个“默认行为”也要看具体是什么样的表单数据，如果是文件上传，会变成**multipart/form-data**。
+
+因此，这只是浏览器考虑了网页表单的针对MIME type的实现，没有什么所谓“HTTP的默认格式”。
+
+即使API对应的客户端确实是浏览器，随着前端技术的发展，同步表单提交也已经少的可怜。
+
+同时对异步请求而言，最新的Javascript框架或库也已经不再把application/x-www-form-urlencoded作为自己默认的数据格式，而是转而使用application/json，或者让开发者自己定义。
 
 application/x-www-form-urlencoded由于受限于它自身的定义，尤其描述复杂的数据关系的时候是无能为力。
 
 目前，不管是服务端还是客户端，正确处理不同的MIME type，在技术上已经没有任何障碍。因此，我们更没有理由在RESTful API上使用表达能力非常有限的application/x-www-form-urlencode作为默认格式，是时候把这个类型丢在脑后了。
 
 
-<a name="headers-for-content-type"></a>
 ## Accept和Content-Type
+
+HTTP协议中客户端和服务端使用下方2个头来协商数据格式(MIME type)。
 
 | 类型 | HTTP头 | 说明 | 实例 |
 | --- | --- | --- | --- |
-| 请求 | Accept | 客户端能接收处理的格式。 | Accept: application/json,application/xml; |
-| 响应 | Content-Type | 服务端响应的格式，同时需要定义字符集。 | Content-Type: application/json; charset=utf-8 |
+| 请求 | Accept | 客户端告知服务端自己能处理的格式。 | Accept: application/json,application/xml; |
+| 响应 | Content-Type | 服务端告知客户端自己返回的格式。需要定义字符集。 | Content-Type: application/json; charset=utf-8 |
 
 常用类型见[MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)。
 
-HTTP协议中定义Accept和Content-Type头，正是为了达到客户端和服务端能够协商MIME type的目的，因此使用它们非常合乎逻辑，同时也能能够让你的URL更佳干净。
+因此使用它们非常合乎逻辑，同时也能能够让你的URL更佳干净。
 
 再则，现在对任何一个开发者来讲，使用Chrome或者Firefox等浏览器的插件，已经不是什么负担，而是常识。
 
@@ -36,25 +42,7 @@ HTTP协议中定义Accept和Content-Type头，正是为了达到客户端和服�
 - Chrome: [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?utm_source=chrome-ntp-icon), [Advanced REST client](https://chrome.google.com/webstore/detail/advanced-rest-client/bljmokabgbdkoefbmccaeficehkmlnao)
 - Firefox: [RESTClient, a debugger for RESTful web services](https://addons.mozilla.org/en-US/firefox/addon/restclient/)
 
-<a name="file-ext-in-url"></a>
-## .json/.xml/.html
-
-```javascript
-/posts/2341/comments/5543.json
-/posts/2341/comments.xml?user_id=3244&rate=5
-```
-
-通过这种方式，可以在不依赖第三方工具的前提下，直接在浏览器中查看返回数据的不同格式。
-
-HTTP头这样的信息是，要么通过浏览器插件，要么通过程序中才有办法定义，用户是没有其他途径。
-
-缺点是服务端需要解析URL中的后缀信息，但是如果你的程序分层和抽象做的好，那么你可以用AOP的方式为你的API增加这种能力。
-
-以增量的方式对已有的API进行适配升级，升级的时候把原来使用的格式作为默认格式，其实代价不会大到无法接受。
-
-
-<a name="no-noun-modifiers"></a>
-## 不使用修饰词
+## Body内容中不使用修饰词
 
 与在URL避免用废话修饰的理由相同
 
@@ -83,14 +71,13 @@ HTTP头这样的信息是，要么通过浏览器插件，要么通过程序中�
 }
 ```
 
-有时，这种“信封信息”(Envelope)并不完全是“废话”。
+有时，这种“信封信息”(Envelope)并不完全是“废话”。但即使是使用，也应非常谨慎，应作为别无他法时不得已的最后选择。
 
 例如:
 - 使用total来为翻页功能提供必要的信息。
-- 为jsonp形式的请求返回不同的callback表达式。
 ```javascript
 {
-    "total": 123432, // 总帖子数
+    "total": 123432, // 总帖子数 
     "entities": { // 这里entities的意义是避免实体对象的数据与total等meta信息散列在同一级
         "posts": [
             {
@@ -101,22 +88,33 @@ HTTP头这样的信息是，要么通过浏览器插件，要么通过程序中�
             ...
         ],
     }
-    "callback": "renderPostListPage(posts, total_count, 344)",
     ...
 }
 ```
 
-尽管如此，从目前发展来看，[CORS](http://www.w3.org/TR/cors/)或者[The Link Header Field(RFC5988)](http://tools.ietf.org/html/rfc5988#page-6)这种新标准的应用在绝大多数场景下都可以满足。因此，这种修饰方式封装实体数据的做法，应尽可能避免。
+使用自定义头，上面的total, entites和posts都可以消除掉。
 
-对服务没有配置权限的，很难处理跨域请求，只好使用jsonp的方式。
+从目前发展来看，客户端也好，服务端也好使用自定义HTTP头不存在技术屏障。
 
-但从职责来看，这是API服务的提供方有没有良好的服务意识的问题，因此应优先考虑在服务方得到解决。
+从职责来看，这是API服务的提供方有没有良好的服务意识的问题，因此应优先考虑在服务方得到解决。
 
+关于自定义头的使用参考了不少资料，大部分资料或者讨论都围绕着下方链接里的信息。
 
-<a name="naming"></a>
+- [Custom HTTP headers : naming conventions](https://stackoverflow.com/questions/3561381/custom-http-headers-naming-conventions)。
+- [Deprecating the "X-" Prefix and Similar Constructs in Application Protocols](https://tools.ietf.org/html/rfc6648)
+- [MDN:Setting HTTP request headers](https://developer.mozilla.org/en/docs/Setting_HTTP_request_headers)
+
+现实中自定义头的命名问题上暂时还没有非常明朗的标准告诉你怎么做是正确的，但把问题描述清楚了，以便你知道怎么做的错误的。
+
+总之，X-前缀方式的自定义头命名现在已经不再被推荐，尽量以更加具体的不大可能与他人的命名冲突的方式命名自定义头。
+
+已经在很多实践中大量被使用，含义明确的自定义头是任何标准也没有明确指出“必须不得使用”。
+
+因此，回到上方例子，你可以使用同样在业界大量被使用的自定义头: **X-Total-Count**。
+
 ## 命名风格
 
-一般来讲，API是要遵守客户端语言的命名规范。
+一般来讲，API是要充分尊重客户端语言的命名规范。
 
 例如:
 - Javascript中通常使用camelCase。
