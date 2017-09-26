@@ -1,5 +1,6 @@
-## <a name="h12">HATEOAS</a>
->**H**ypermedia **a**s **t**he **E**ngine **o**f **A**pplication **S**tate
+# HATEOAS
+
+> **H**ypermedia **a**s **t**he **E**ngine **o**f **A**pplication **S**tate
 
 为客户端提供利用API进一步查找数据的附加信息。
 在应用这项原则之前，需要评估一下API的客户端是否是在运行时刻根据服务端响应的数据动态地决定进一步的动作。

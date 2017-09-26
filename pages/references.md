@@ -21,5 +21,5 @@
 - [Amazon S3 REST API Introduction](http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html)
 - [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 - [React.js and Spring Data REST](https://spring.io/guides/tutorials/react-and-spring-data-rest/)
-
-
+- [Hyphen, underscore, or camelCase as word delimiter in URIs?](https://stackoverflow.com/questions/10302179/hyphen-underscore-or-camelcase-as-word-delimiter-in-uris)
+- [5 Basic REST API Design Guidelines](http://blog.restcase.com/5-basic-rest-api-design-guidelines/)

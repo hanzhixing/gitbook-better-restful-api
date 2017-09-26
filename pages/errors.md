@@ -1,5 +1,7 @@
 # 异常
 
+任何API请求，都有可能发生异常。
+
 API为客户端反馈异常情况的时候，往往状态码和简单的一句描述，是远远不够的。
 
 例如客户端提交注册表单，希望能够友好地提示用户哪些表单项填错了，是怎么错的。
@@ -9,8 +11,39 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 
 经在不同场景试用，如下这种方案比较实用。
 
-## 单实体
+## 身份验证没通过
 ```javascript
+// 响应
+// Status Code: 403 Forbidden
+```
+
+## 权限验证没通过 (资源访问权限)
+```javascript
+// 响应
+// Status Code: 401 Unauthorized
+```
+
+## 资源不存在
+```javascript
+// 响应
+// Status Code: 404 Not Found
+```
+
+## 资源冲突
+一般在使用PUT更新资源的时候遇到。
+
+但也可以用下方《其他》中的方法实现这种场景。
+
+```javascript
+// 响应
+// Status Code: 409 Conflict
+```
+
+## 其他 (统统都是400 Bad Request)
+
+```javascript
+// 响应
+// Status Code: 400 Bad Request
 {
   // 你想完全符合http1.1协议, 但需要422这种其他标准中定义，但很有意义的状态码, 你可以利用这个code.
   // 你可以和团队协商自定义code, 例如使用http1.1中没有定义的6xx-9xx, 或者干脆使用位数更多的数字.
@@ -36,36 +69,3 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 }
 ```
 
-## 多实体
-```javascript
-{
-  // 实体key.
-  // 仅返回操作成功的实体对象. 如果所有实体对象都没有被成功操作, 则不返回这个对象.
-  "entities": [
-    null, // null表示未被成功处理, 在errors中一定有对应的数组下标.
-    {
-      "id": 3432,
-      "title": "Any useful text",
-    },
-    ...
-  ],
-  // 仅在发生异常时返回errors, 如果没有发生异常, 则不返回这个对象.
-  "errors": [
-    {
-      "index": 1, // 提交时的数组下标
-      "code": 422, 
-      "msg": "Invalid characters in username",
-      // 以上是异常情况的总体描述, 除此之外, 你往往还需要每个表单项的异常信息.
-      "detail": [
-        {
-          "key" : "username",
-          "code" : 422001,
-          "msg" : "The 'username' can only contains alphabets, numbers and '_'."
-        },
-        ...
-      ],
-    },
-    ...
-  ]
-}
-```
