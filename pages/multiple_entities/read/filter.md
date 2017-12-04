@@ -14,6 +14,6 @@
 
 ```javascript
 // 请求
-// Request URL: https://api.domain.com/rest/v1/posts?id=123,456&user_id=>16&tag_id=!12,22&title=%哈哈
+// Request URL: https://api.domain.com/rest/v1/posts?id=123,456&user_id>=16&tag_id!=12,22&title%=哈哈
 // Request Method: GET
 ```

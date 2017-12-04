@@ -48,7 +48,7 @@
 }
 ```
 
->外链方式：/posts/123?_extend=user,tags
+>外链方式：/posts/123?_extend=user.id,user.name,user.email,tags
 
 ```javascript
 // 外链方式

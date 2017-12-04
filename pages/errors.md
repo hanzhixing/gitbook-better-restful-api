@@ -14,14 +14,17 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 ## 身份验证没通过
 ```javascript
 // 响应
-// Status Code: 403 Forbidden
+// Status Code: 401 Unauthorized
 ```
+Authorize一般指对特定的资源授予权限的行为，而Authenticate一般指授予特定身份的行为，拥有一种身份，不代表对任何资源都有访问权限。
+http1.1协议中401的描述文本使用了Unauthorized，但是，如果去看IIS的401的实现，就可以发现401是既包含Authentication，也包含Authorization。
 
 ## 权限验证没通过 (资源访问权限)
 ```javascript
 // 响应
-// Status Code: 401 Unauthorized
+// Status Code: 403 Forbidden
 ```
+服务端能够识别请求，但拒绝获取资源。
 
 ## 资源不存在
 ```javascript
@@ -30,9 +33,12 @@ API为客户端反馈异常情况的时候，往往状态码和简单的一句�
 ```
 
 ## 资源冲突
-一般在使用PUT更新资源的时候遇到。
+一般在使用PUT或PATCH更新资源的时候遇到。
 
-但也可以用下方《其他》中的方法实现这种场景。
+也可以用下方《其他》中的方法实现这种场景。
+
+由于RESTful架构方式，本身会涉及到较复杂的关系，大多数情况是很难用一个状态码描述到底是哪个资源冲突。
+因此，推荐使用400来约定这种场景。
 
 ```javascript
 // 响应

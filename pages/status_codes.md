@@ -39,8 +39,8 @@ WEB服务器或框架会帮助我们处理一部分，但服务端和客户端�
 | 307 | Temporary Redirect | 见302 |
 | 304 | Not Modified | 对于调用频率非常高，应用了服务端缓存技术的API来讲要使用此状态码告知客户端使用的是缓存中的数据。|
 | 400 | Bad Request | 可以代表其他。见[异常详情](/pages/errors.md)。 |
-| 401 | Unauthorized | 见[权限验证](/pages/auth.md)。 |
-| 403 | Forbidden | 见[权限验证](/pages/auth.md)。 |
+| 401 | Unauthorized | 身份验证未通过。 |
+| 403 | Forbidden | 权限验证未通过。 |
 | 404 | Not found | 请求的资源不存在。 |
 | 409 | Conflict | 资源冲突。|
 
